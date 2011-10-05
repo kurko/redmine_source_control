@@ -5,6 +5,12 @@ Redmine::Plugin.register :redmine_source_control do
   author 'Alexandre de Oliveira'
   description 'Este é um plugin para catalogar códigos-fonte de projetos.'
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
+  url '-'
   author_url 'http://twitter.com/kurko'
+  
+  permission :source_control, { :source_control => [:index, :show] }, :public => true
+  menu :top_menu, :source_control, { :controller => 'source_control', :action => 'index' },
+    :caption => 'SourceControl',
+    #:after => :activity,
+    :param => :project_id
 end

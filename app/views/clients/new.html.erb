@@ -1,0 +1,14 @@
+<h1>Novo cliente</h1>
+<p>Crie um novo cliente abaixo.</p>
+
+<% form_for @client, :url => { :controller => 'clients', :action => 'create' } do |f| %>
+	
+	<div class="field">
+		<%= f.label :name, "Nome do cliente" %>
+		<%= f.text_field :name %>
+	</div>
+	
+	<%= f.submit "Criar" %>
+	
+	
+<% end %>
