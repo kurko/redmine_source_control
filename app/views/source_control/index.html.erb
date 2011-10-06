@@ -1,4 +1,4 @@
-<h1>Catalogos de códigos-fonte</h1>
+<h1>Catálogos de códigos-fonte</h1>
 
 <% if @client.blank? %>
 <div class="">
@@ -11,8 +11,8 @@
 		Selecione um dos clientes abaixo para visualizar seu catálogo de códigos-fontes.
 	</p>
 	<ul>
-	<% @client.each { |e| %>
-		<li><%= link_to e.name, { :controller => '', :action => '' } %></li>
-	<% } %>
+		<% @client.each { |e| %>
+			<li><%= link_to e.name, { :controller => 'codecatalog', :action => 'index', :id => e.id.to_s } %></li>
+		<% } %>
 	</ul>
 <% end %>

@@ -1,0 +1,50 @@
+<% form_for [@client, @source] do |f| %>
+	
+	<div class="field">
+		<%= f.label :source_name, "Nome do código" %>
+		<%= f.text_field :source_name %>
+		<div class="explanation">
+			
+		</div>
+	</div>
+
+	<div class="field">
+ 		<%= f.label :complexity, "Complexidade" %>
+ 		<%= f.select :complexity, [1, 2, 3, 4, 5] %>
+		<div class="explanation">
+			Grau de complexidade do código.
+		</div>
+ 	</div>
+	<div class="field">
+ 		<%= f.label :tables_involved, "Tabelas envolvidas" %>
+ 		<%= f.text_area :tables_involved %>
+ 	</div>
+	<div class="field">
+ 		<%= f.label :called_from, "Chamado de onde" %>
+ 		<%= f.text_area :called_from %>
+		<div class="explanation">
+			Nome do <em>menu</em> ou <em>rotina</em> de onde é chamado.
+		</div>
+ 	</div>
+	<div class="field">
+ 		<%= f.label :observation, "Observação" %>
+ 		<%= f.text_area :observation %>
+ 	</div>
+	<div class="field">
+ 		<%= f.label :line_numbers, "Número de Linhas" %>
+ 		<%= f.text_area :line_numbers %>
+ 	</div>
+	<div class="field">
+ 		<%= f.label :active, "Ativo?" %>
+ 		<%= f.select :active, [[ 'Sim', true ], ['Não', false]] %>
+ 	</div>
+	<div class="field">
+ 		<%= f.label :activation_date, "Data de ativação" %>
+ 		<%= f.text_field :activation_date %>
+ 	</div>
+	
+<% end %>
+
+<% content_for :header_tags do %>
+	<%= stylesheet_link_tag 'form', :plugin => 'redmine_source_control' %>
+<% end %>

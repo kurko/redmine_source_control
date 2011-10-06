@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  source_name: MyText
+  sourcecode_type: 
+  complexity: 1
+  tables_involved: MyText
+  called_from: MyText
+  observation: MyText
+  line_numbers: MyString
+  active: false
+  ativation: 2011-10-06
+two:
+  id: 2
+  source_name: MyText
+  sourcecode_type: 
+  complexity: 1
+  tables_involved: MyText
+  called_from: MyText
+  observation: MyText
+  line_numbers: MyString
+  active: false
+  ativation: 2011-10-06

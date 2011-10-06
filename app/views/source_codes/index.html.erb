@@ -1,0 +1,9 @@
+<h2>Código catalogado</h2>
+
+<ul>
+<% @source.each { |e| %>
+	<li><%= e.source_name %></li>
+<% } %>
+</ul>
+
+<%= link_to 'Novo código', new_client_sourcecode_path(params[:client_id]) %>

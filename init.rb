@@ -8,9 +8,10 @@ Redmine::Plugin.register :redmine_source_control do
   url '-'
   author_url 'http://twitter.com/kurko'
   
-  permission :source_control, { :source_control => [:index, :show] }, :public => true
-  menu :top_menu, :source_control, { :controller => 'source_control', :action => 'index' },
+#  permission :source_control, { :source_control => [:index, :show] }, :public => true
+  menu :top_menu, :source_control, { :controller => 'clients', :action => 'index' },
     :caption => 'SourceControl',
     #:after => :activity,
     :param => :project_id
+
 end

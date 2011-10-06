@@ -1,1 +1,18 @@
-<h2>Clients#index</h2>
+<h1>Catálogos de códigos-fonte</h1>
+
+<% if @client.blank? %>
+<div class="">
+	Você não possui clientes cadastrados.
+	<%= link_to 'Cadastre o primeiro', { :action => 'new', :controller => 'clients' } %>.
+</div>
+<% else %>
+	
+	<p>
+		Selecione um dos clientes abaixo para visualizar seu catálogo de códigos-fontes.
+	</p>
+	<ul>
+		<% @client.each { |e| %>
+			<li><%= link_to e.name, client_sourcecodes_path(e.id) %></li>
+		<% } %>
+	</ul>
+<% end %>

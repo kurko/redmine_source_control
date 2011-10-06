@@ -1,8 +1,8 @@
 class ClientsController < ApplicationController
   unloadable
 
-
   def index
+    @client = Client.all
   end
 
   def new

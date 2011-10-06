@@ -1,0 +1,39 @@
+div.field {
+	clear: both;
+	display: table;
+	width: 700px;
+	padding-top: 0px;
+	padding-bottom: 3px;
+}
+
+div.field label {
+	width: 200px;
+	position: relative;
+	top: 5px;
+	display: table;
+	float: left;
+}
+
+div.field input, div.field textarea {
+	float: left;
+	padding: 3px;
+}
+
+div.field input {
+	width: 300px;
+	height: 18px;
+}
+
+div.field textarea {
+	width: 400px;
+	height: 130px;
+}
+
+
+div.field div.explanation {
+	margin-left: 201px;
+	padding-top: 3px;
+	color: #888;
+	font-size: 0.9em;
+	clear: both;
+}
