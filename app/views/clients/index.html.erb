@@ -12,7 +12,7 @@
 	</p>
 	<ul>
 		<% @client.each { |e| %>
-			<li><%= link_to e.name, client_sourcecodes_path(e.id) %></li>
+			<li><%= link_to e.name, client_source_codes_path(e.id) %></li>
 		<% } %>
 	</ul>
 <% end %>

@@ -1,9 +1,87 @@
+<style>
+	table.listing {
+		width: 100%;
+	}
+	table.listing td {
+		padding: 5px;
+	}
+	
+	table.listing tr.header {
+		background: #555;
+		color: white;
+	}
+	table.listing tr.odd td {
+		background: #f4f4f4;
+		color: black;
+	}
+	table.listing tr.even td {
+		background: #fff;
+		color: black;
+	}
+	table.listing tr.inactive td {
+		color: #777 !important;
+	}
+
+</style>
+
 <h2>Código catalogado</h2>
 
-<ul>
-<% @source.each { |e| %>
-	<li><%= e.source_name %></li>
-<% } %>
-</ul>
+<%= link_to 'Novo código', new_client_source_code_path(params[:client_id]) %>
 
-<%= link_to 'Novo código', new_client_sourcecode_path(params[:client_id]) %>
+<% if @source.count > 0 %>
+	<p>
+		Listagem de todos os códigos-fonte cadastrados.
+	</p>
+	<table class="codes listing" cellspacing="0" cellpadding="0">
+		<tr class="header">
+			<td>
+				Nome do arquivo
+			</td>
+			<td>
+				Complexidade
+			</td>
+			<td>
+				Ativo
+			</td>
+			<td>
+				Chamado de
+			</td>
+			<td>
+				Tabelas envolvidas
+			</td>
+			<td>
+				Data de ativação
+			</td>
+			<td>
+				
+			</td>
+		</tr>
+	<% @source.each { |e| %>
+		<tr class="<%= cycle('odd', 'even') %> <%= 'inactive' unless e.active? %>">
+			<td>
+				<%= e.source_name %>
+			</td>
+			<td>
+				<%= e.complexity %>
+			</td>
+			<td>
+				<%= if e.active?; 'Sim'; else 'Não'; end %>
+			</td>
+			<td>
+				<%= e.sourcecode_type.name %>
+			</td>
+			<td>
+				<%= e.tables_involved %>
+			</td>
+			<td>
+				<%= e.activation_date %>
+			</td>
+			<td>
+				<%= link_to "Editar", edit_client_source_code_path(e.client_id, e.id) %>
+			</td>
+		</tr>
+	<% } %>
+	</table>
+	
+<% end %>
+

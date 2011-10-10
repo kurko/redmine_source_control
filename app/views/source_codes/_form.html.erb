@@ -4,10 +4,15 @@
 		<%= f.label :source_name, "Nome do código" %>
 		<%= f.text_field :source_name %>
 		<div class="explanation">
-			
+			Ex.: "TML010.prw"
 		</div>
 	</div>
 
+	<div class="field">
+		<%= f.label :sourcecode_type_id, "Tipo" %>
+	 	<%= f.select :sourcecode_type_id, @sourcecode_types %>
+	</div>
+	
 	<div class="field">
  		<%= f.label :complexity, "Complexidade" %>
  		<%= f.select :complexity, [1, 2, 3, 4, 5] %>
@@ -19,11 +24,17 @@
  		<%= f.label :tables_involved, "Tabelas envolvidas" %>
  		<%= f.text_area :tables_involved %>
  	</div>
+
 	<div class="field">
- 		<%= f.label :called_from, "Chamado de onde" %>
- 		<%= f.text_area :called_from %>
+ 		<%= f.label :code_sector_id, "Chamado a partir de um" %>
+ 		<%= f.select :code_sector_id, @code_sectors %>
+ 	</div>
+	
+	<div class="field">
+ 		<%= f.label :called_from, "Nome do local de onde é chamado" %>
+ 		<%= f.text_field :called_from %>
 		<div class="explanation">
-			Nome do <em>menu</em> ou <em>rotina</em> de onde é chamado.
+			Ex.: "SIGAEST", "SIGAPCP"
 		</div>
  	</div>
 	<div class="field">
@@ -32,7 +43,7 @@
  	</div>
 	<div class="field">
  		<%= f.label :line_numbers, "Número de Linhas" %>
- 		<%= f.text_area :line_numbers %>
+ 		<%= f.text_field :line_numbers %>
  	</div>
 	<div class="field">
  		<%= f.label :active, "Ativo?" %>
@@ -40,9 +51,10 @@
  	</div>
 	<div class="field">
  		<%= f.label :activation_date, "Data de ativação" %>
- 		<%= f.text_field :activation_date %>
+ 		<%= f.date_select :activation_date %>
  	</div>
 	
+	<%= f.submit "Enviar" %>
 <% end %>
 
 <% content_for :header_tags do %>
