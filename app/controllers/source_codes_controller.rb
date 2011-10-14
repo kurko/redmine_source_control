@@ -3,7 +3,36 @@ class SourceCodesController < ApplicationController
 
 
   def index
-    @source = SourceCode.all(:conditions => [ 'client_id = ?', params[:client_id] ], :include => [:sourcecode_type] )
+    @per_page = 50
+    @page = params[:page].to_i || 1
+    @page = 1 if @page <= 0
+    @offset = (@page.to_i-1)*@per_page
+    @offset = 0 if @offset < 0
+    # default query
+    query = { 
+      :conditions => [ 'source_codes.client_id = ?', params[:client_id] ], 
+      :include => [:sourcecode_type],
+      :limit => @per_page,
+      :offset => @offset
+    }
+    
+    @total_records = SourceCode.count query.clone.delete_if { |key, value| true if key == :limit }.delete_if { |key, value| true if key == :offset }
+    
+    unless params[:order_by].blank?
+      query[:order] = params[:order_by].clone
+      query[:order] << ' '+params[:order_direction] unless params[:order_direction].blank?
+    end
+    
+    @order_by = params[:order_by] || false
+    @order_direction = params[:order_direction] || 'asc'
+    @current_order_direction = @order_direction.clone
+    if @order_direction == 'asc'
+      @order_direction = 'desc' 
+    else
+      @order_direction = 'asc'
+    end
+    
+    @source = SourceCode.all(query)
   end
 
   def show
