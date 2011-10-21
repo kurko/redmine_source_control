@@ -1,40 +1,13 @@
 class SourceCodesController < ApplicationController
   unloadable
+  
+  before_filter :set_default_conditions
 
 
   def index
-    @per_page = 50
-    @page = params[:page].to_i || 1
-    @page = 1 if @page <= 0
-    @offset = (@page.to_i-1)*@per_page
-    @offset = 0 if @offset < 0
-    # default query
-    query = { 
-      :conditions => [ 'source_codes.client_id = ?', params[:client_id] ], 
-      :include => [:sourcecode_type],
-      :limit => @per_page,
-      :offset => @offset
-    }
-    
-    @total_records = SourceCode.count query.clone.delete_if { |key, value| true if key == :limit }.delete_if { |key, value| true if key == :offset }
-    
-    unless params[:order_by].blank?
-      query[:order] = params[:order_by].clone
-      query[:order] << ' '+params[:order_direction] unless params[:order_direction].blank?
-    end
-    
-    @order_by = params[:order_by] || false
-    @order_direction = params[:order_direction] || 'asc'
-    @current_order_direction = @order_direction.clone
-    if @order_direction == 'asc'
-      @order_direction = 'desc' 
-    else
-      @order_direction = 'asc'
-    end
-    
-    @source = SourceCode.all(query)
+    listing
   end
-
+  
   def show
   end
 
@@ -82,4 +55,66 @@ class SourceCodesController < ApplicationController
 
   def delete
   end
+  
+  # Called via Ajax
+  def search
+    
+    params[:search][:field_name].each_with_index { |v, i|
+      next if params[:search][:query][i.to_i].blank?
+      query = params[:search][:query][i.to_i]
+      @conditions[0] << " AND source_codes."+v+" LIKE _utf8 '%"+query+"%' COLLATE utf8_unicode_ci"
+#      @conditions << query
+    }
+    
+    logger.debug @conditions.inspect
+    listing
+    render "search", :layout => false
+  end
+  
+  private
+  
+    # Each query should have these conditions
+    def set_default_conditions
+      @conditions = [ 'source_codes.client_id = ?', params[:client_id] ]
+    end
+    
+    # Creates all the results and pagination
+    def listing
+
+      @per_page = 200
+      @page = params[:page].to_i || 1
+      @page = 1 if @page <= 0
+      @offset = (@page.to_i-1)*@per_page
+      @offset = 0 if @offset < 0
+    
+      # default query
+      query = { 
+        :conditions => @conditions, 
+        :include => [:sourcecode_type],
+        :limit => @per_page,
+        :offset => @offset
+      }
+    
+      @id = params[:client_id]
+    
+      @total_records = SourceCode.count query.clone.delete_if { |key, value| true if key == :limit }.delete_if { |key, value| true if key == :offset }
+    
+      unless params[:order_by].blank?
+        query[:order] = params[:order_by].clone
+        query[:order] << ' '+params[:order_direction] unless params[:order_direction].blank?
+      end
+    
+      @order_by = params[:order_by] || false
+      @order_direction = params[:order_direction] || 'asc'
+      @current_order_direction = @order_direction.clone
+      if @order_direction == 'asc'
+        @order_direction = 'desc' 
+      else
+        @order_direction = 'asc'
+      end
+    
+      @source = SourceCode.all(query)
+        
+    end
+  
 end

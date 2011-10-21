@@ -1,0 +1,125 @@
+<% 
+# AL: Infelizmente, em cada alteração em CSS ou JS, o servidor deve ser
+# reiniciado para limpar o cache, o que dificulta o desenvolvimento.
+# Colocando estes estilo inline facilita um pouco as coisas, embora
+# seja muito sujo. Culpa do Redmine.
+%>
+<style>
+	table.listing {
+		width: 100%;
+	}
+	table.listing td {
+		padding: 5px;
+		font-size: 0.9em;
+	}
+	
+	table.listing tr.header {
+		background: #555;
+		color: white;
+	}
+		table.listing tr.header a { color: white; }
+		table.listing tr.header a.current_filter { font-style: italic; color: white; }
+		table.listing td.current_column_filter {
+			background: #f7f7f7 !important;
+			border-left: 1px solid #f1f1f1;
+			border-right: 1px solid #f1f1f1;
+		}
+
+	table.listing tr.odd td {
+		background: #f4f4f4;
+		color: black;
+	}
+	table.listing tr.even td {
+		background: #fff;
+		color: black;
+	}
+	table.listing tr.inactive td {
+		color: #777 !important;
+	}
+
+</style>
+
+<% if @source.count > 0 %>
+	<p>
+		Listagem de todos os códigos-fonte cadastrados, num total de <%= @total_records %>. Mostrando de <%= (@offset+1).to_s %> a <%= @offset + @per_page %>.
+	</p>
+	<table class="codes listing" cellspacing="0" cellpadding="0">
+		<tr class="header">
+			<td>
+				<%= link_to_with_filter 'Nome do arquivo', 'source_name' %>
+			</td>
+			<td>
+				<%= link_to_with_filter 'Data de ativação', 'activation_date' %>
+			</td>
+			<td>
+				<%= link_to_with_filter 'Tipo', 'sourcecode_types.name' %>
+			</td>
+			<td>
+				<%= link_to_with_filter 'Grau', 'complexity' %>
+			</td>
+			<td>
+				<%= link_to_with_filter 'Ativo', 'active' %>
+			</td>
+			<td>
+				<%= link_to_with_filter 'Chamado de', 'code_sector.name' %>
+			</td>
+			<td>
+				<%= link_to_with_filter 'Menu/Rotina', 'called_from' %>
+			</td>
+			<td>
+				<%= link_to_with_filter 'Tabelas envolvidas', 'tables_involved' %>
+			</td>
+			<td>
+				
+			</td>
+		</tr>
+	<% @source.each { |e| %>
+		<tr class="<%= cycle('odd', 'even') %> <%= 'inactive' unless e.active? %>">
+			<td class="<%= class_name_if_column_filtered 'source_name' %>">
+				<%= e.source_name %>
+			</td>
+			<td class="<%= class_name_if_column_filtered 'activation_date' %>">
+				<%= e.activation_date %>
+			</td>
+			<td class="<%= class_name_if_column_filtered 'sourcecode_types.name' %>">
+				<%= e.sourcecode_type.name %>
+			</td>
+			<td class="<%= class_name_if_column_filtered 'complexity' %>">
+				<%= e.complexity %>
+			</td>
+			<td class="<%= class_name_if_column_filtered 'active' %>">
+				<%= if e.active?; 'Sim'; else 'Não'; end %>
+			</td>
+			<td class="<%= class_name_if_column_filtered 'code_sector.name' %>">
+				<%= e.code_sector.name %>
+			</td>
+			<td class="<%= class_name_if_column_filtered 'called_from' %>">
+				<%= e.called_from %>
+			</td>
+			<td class="<%= class_name_if_column_filtered 'tables_involved' %>">
+				<%= e.tables_involved %>
+			</td>
+			<td>
+				<%= link_to "Editar", edit_client_source_code_path(e.client_id, e.id) %>
+			</td>
+		</tr>
+	<% } %>
+	</table>
+
+	<br />
+	<% if @offset > 0 || @total_records > (@offset + @per_page) %>
+
+		Páginação: 
+		<% if @offset > 0 %>
+			<%= link_to 'Página anterior', client_source_codes_path(:order_by => @order_by, :order_direction => @current_order_direction, :page => (@page-1)) %>
+		<% end %>
+	
+		<%= ' - ' if @offset > 0 && @total_records > (@offset + @per_page) %>
+
+		<% if @total_records > (@offset + @per_page) %>
+			<%= link_to 'Próxima página', client_source_codes_path(:order_by => @order_by, :order_direction => @current_order_direction, :page => (@page+1)) %>
+		<% end %>
+
+	<% end %>
+	
+<% end %>

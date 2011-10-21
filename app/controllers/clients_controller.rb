@@ -13,7 +13,7 @@ class ClientsController < ApplicationController
     @client = Client.new(params[:client])
     if @client.save
       flash[:notice] = "Cliente adicionado com sucesso"
-      redirect_to :controller => 'source_control', :action => 'index'
+      redirect_to :controller => 'clients', :action => 'index'
     else
       flash[:failure] = "Ocorreu um erro ao cadastrar cliente"
       render :action => 'new'

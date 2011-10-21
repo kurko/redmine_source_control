@@ -51,7 +51,7 @@
  	</div>
 	<div class="field">
  		<%= f.label :activation_date, "Data de ativação" %>
- 		<%= f.date_select :activation_date %>
+ 		<%= f.date_select :activation_date, :start_year => 1990 %>
  	</div>
 	
 	<%= f.submit "Enviar" %>

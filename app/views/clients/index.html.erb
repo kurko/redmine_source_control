@@ -15,4 +15,7 @@
 			<li><%= link_to e.name, client_source_codes_path(e.id) %></li>
 		<% } %>
 	</ul>
+	<p>
+		Você pode <%= link_to 'cadastrar outros clientes', { :action => 'new', :controller => 'clients' } %>.
+	</p>
 <% end %>
