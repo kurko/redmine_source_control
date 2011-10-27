@@ -15,8 +15,6 @@ class SourceCodesController < ApplicationController
     @client = Client.find_by_id(params[:client_id])
     @source = @client.source_codes.build
     @sourcecode_type = @source.build_sourcecode_type
-    @code_sector = @source.build_code_sector
-    @code_sectors = CodeSector.find(:all).map { |e| [e.name, e.id]}
     @sourcecode_types = SourcecodeType.find(:all).map { |e| [e.name, e.id]}
   end
 
@@ -62,17 +60,32 @@ class SourceCodesController < ApplicationController
     params[:search][:field_name].each_with_index { |v, i|
       next if params[:search][:query][i.to_i].blank?
       query = params[:search][:query][i.to_i]
-      @conditions[0] << " AND source_codes."+v+" LIKE _utf8 '%"+query+"%' COLLATE utf8_unicode_ci"
-#      @conditions << query
+      field_query = search_special_fields v, query
+      @conditions[0] << " AND "+field_query[:field]+" LIKE _utf8 '%"+field_query[:query]+"%' COLLATE utf8_unicode_ci"
     }
     
-    logger.debug @conditions.inspect
     listing
     render "search", :layout => false
   end
   
   private
   
+    def search_special_fields field, query
+      logger.debug "Field: " + field
+      
+      if field == "active"
+        case query.downcase
+        when "sim" then query = "1"
+        when "não" then query = "0"
+        when "nao" then query = "0"
+        end
+      end
+      unless field =~ /\./
+        field = "source_codes." + field
+      end
+      { :field => field, :query => query }
+    end
+    
     # Each query should have these conditions
     def set_default_conditions
       @conditions = [ 'source_codes.client_id = ?', params[:client_id] ]

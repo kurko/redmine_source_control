@@ -40,8 +40,9 @@
 </style>
 
 <% if @source.count > 0 %>
+	<% @total_offset = @total_records if @offset + @per_page > @total_records %>
 	<p>
-		Listagem de todos os códigos-fonte cadastrados, num total de <%= @total_records %>. Mostrando de <%= (@offset+1).to_s %> a <%= @offset + @per_page %>.
+		Listagem de todos os códigos-fonte cadastrados, num total de <%= @total_records %>. Mostrando de <%= (@offset+1).to_s %> a <%= @total_offset %>.
 	</p>
 	<table class="codes listing" cellspacing="0" cellpadding="0">
 		<tr class="header">
@@ -61,7 +62,7 @@
 				<%= link_to_with_filter 'Ativo', 'active' %>
 			</td>
 			<td>
-				<%= link_to_with_filter 'Chamado de', 'code_sector.name' %>
+				<%= link_to_with_filter 'Chamado de', 'code_sector' %>
 			</td>
 			<td>
 				<%= link_to_with_filter 'Menu/Rotina', 'called_from' %>
@@ -90,8 +91,8 @@
 			<td class="<%= class_name_if_column_filtered 'active' %>">
 				<%= if e.active?; 'Sim'; else 'Não'; end %>
 			</td>
-			<td class="<%= class_name_if_column_filtered 'code_sector.name' %>">
-				<%= e.code_sector.name %>
+			<td class="<%= class_name_if_column_filtered 'code_sector' %>">
+				<%= e.code_sector %>
 			</td>
 			<td class="<%= class_name_if_column_filtered 'called_from' %>">
 				<%= e.called_from %>

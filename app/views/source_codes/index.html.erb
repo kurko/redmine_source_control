@@ -25,7 +25,18 @@ document.observe("dom:loaded", function(){
 	#search_filters {
 		padding: 10px;
 		background: #eee;
+		float: left;
 	}
+	.submit {
+		display: table;
+		margin: 5px 0 0 0;
+	}
+	#result {
+		clear: both;
+		display: table;
+		width: 100%;
+	}
+	
 </style>
 
 <h2>Código catalogado</h2>
@@ -41,17 +52,17 @@ document.observe("dom:loaded", function(){
 		<label>Filtro</label>
 		<select name="search[field_name][]">
 			<option value="source_name">Nome do arquivo</option>
-			<option value="sourcecode_types_name">Tipo</option>
+			<option value="sourcecode_types.name">Tipo</option>
 			<option value="complexity">Complexidade</option>
 			<option value="tables_involved">Tabelas envolvidas</option>
-			<option value="code_sector.name">Chamado de</option>
+			<option value="code_sector">Chamado de</option>
 			<option value="called_from">Menu/Rotina</option>
 			<option value="observation">Observações</option>
 			<option value="active">Ativo</option>
 		</select>
 	</span>
 	<span class="field">
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;
 		<label>Termo buscado</label>
 		<input type="text" name="search[query][]" />
 	</span>
@@ -61,9 +72,14 @@ document.observe("dom:loaded", function(){
 <div id="search_filters">
 	
 	<% form_remote_tag :url => search_client_source_codes_path, :update => "result" do -%>
-		<div class="fields"></div>
+		<div class="filters">
+			<div class="fields">
+			</div>
+		</div>
 		<a href="javascript: void(0)" id="add_filter">Novo filtro</a>
-		<%= submit_tag "Pesquisar" %>
+		<div class="submit">
+			<%= submit_tag "Pesquisar" %>
+		</div>
 	<% end -%>
 </div>
 <div id="result">

@@ -26,8 +26,23 @@
  	</div>
 
 	<div class="field">
- 		<%= f.label :code_sector_id, "Chamado a partir de um" %>
- 		<%= f.select :code_sector_id, @code_sectors %>
+ 		<%= f.label :code_sector, "Chamado a partir de um" %>
+ 		<%= f.text_field :code_sector %>
+		<div class="explanation">
+	    Menu,
+	    Rotina,
+	    Programa,
+	    Job,
+	    Schedule,
+	    Dicionário,
+	    X3_Campo,
+	    X3_VLDUSER,
+	    X3_Valid,
+	    X3_Regra,
+	    X3_SX2,
+	    X7_Regra,
+	    Menu/Programa			
+		</div>
  	</div>
 	
 	<div class="field">
