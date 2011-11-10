@@ -101,6 +101,7 @@
 				<%= e.tables_involved %>
 			</td>
 			<td>
+				<%= link_to "Excluir", client_source_code_path(e.client_id, e.id), :confirm => "Você tem certeza disto?", :method => :delete %> /
 				<%= link_to "Editar", edit_client_source_code_path(e.client_id, e.id) %>
 			</td>
 		</tr>

@@ -69,7 +69,9 @@
  		<%= f.date_select :activation_date, :start_year => 1990 %>
  	</div>
 	
-	<%= f.submit "Enviar" %>
+	<br />
+	<%= f.submit "Salvar" %> ou 
+	<%= link_to "cancelar", client_source_codes_path(@client) %>
 <% end %>
 
 <% content_for :header_tags do %>

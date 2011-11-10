@@ -10,7 +10,7 @@ Redmine::Plugin.register :redmine_source_control do
   
 #  permission :source_control, { :source_control => [:index, :show] }, :public => true
   menu :top_menu, :source_control, { :controller => 'clients', :action => 'index' },
-    :caption => 'SourceControl',
+    :caption => 'Catálogo de Códigos',
     #:after => :activity,
     :param => :project_id
 

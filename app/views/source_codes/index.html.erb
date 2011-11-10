@@ -69,6 +69,7 @@ document.observe("dom:loaded", function(){
 	</div>
 	
 </div>
+<% unless @source.blank? %>
 <div id="search_filters">
 	
 	<% form_remote_tag :url => search_client_source_codes_path, :update => "result" do -%>
@@ -82,6 +83,7 @@ document.observe("dom:loaded", function(){
 		</div>
 	<% end -%>
 </div>
+<% end %>
 <div id="result">
 
 <%= render :partial => 'listing' %>

@@ -46,12 +46,20 @@ class SourceCodesController < ApplicationController
       flash[:notice] = "Registro alterado com sucesso."
       redirect_to client_source_codes_url
     else
+      flash[:alert] = "Não foi possível atualizar o registro."
       render :edit
     end
     
   end
 
-  def delete
+  def destroy
+    @source = SourceCode.find(params[:id])
+    if @source.destroy
+      flash[:notice] = "Registro excluído com sucesso."
+    else
+      flash[:alert] = "Não foi possível excluir o registro."
+    end
+    redirect_to client_source_codes_url and return
   end
   
   # Called via Ajax
