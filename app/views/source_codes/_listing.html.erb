@@ -34,7 +34,7 @@
 		color: black;
 	}
 	table.listing tr.inactive td {
-		color: #777 !important;
+		color: #888 !important;
 	}
 
 </style>
@@ -43,6 +43,7 @@
 	<% @total_offset = @total_records if @offset + @per_page > @total_records %>
 	<p>
 		Listagem de todos os códigos-fonte cadastrados, num total de <%= @total_records %>. Mostrando de <%= (@offset+1).to_s %> a <%= @total_offset %>.
+		Códigos inativos estão acinzentados.
 	</p>
 	<table class="codes listing" cellspacing="0" cellpadding="0">
 		<tr class="header">
@@ -82,8 +83,10 @@
 			<td class="<%= class_name_if_column_filtered 'activation_date' %>">
 				<%= e.activation_date %>
 			</td>
-			<td class="<%= class_name_if_column_filtered 'sourcecode_types.name' %>">
-				<%= e.sourcecode_type.name %>
+			<td class="<%= class_name_if_column_filtered 'sourcecode_type.name' %>">
+				<% unless e.sourcecode_type.blank? %>
+					<%= e.sourcecode_type.name %>
+				<% end %>
 			</td>
 			<td class="<%= class_name_if_column_filtered 'complexity' %>">
 				<%= e.complexity %>

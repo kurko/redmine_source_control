@@ -10,6 +10,7 @@
 
 	<div class="field">
 		<%= f.label :sourcecode_type_id, "Tipo" %>
+		<% @sourcecode_types.unshift(["Selecione um tipo", ""]) %>
 	 	<%= f.select :sourcecode_type_id, @sourcecode_types %>
 	</div>
 	
@@ -66,7 +67,7 @@
  	</div>
 	<div class="field">
  		<%= f.label :activation_date, "Data de ativação" %>
- 		<%= f.date_select :activation_date, :start_year => 1990 %>
+ 		<%= f.date_select :activation_date, :start_year => 1990, :prompt => {:day => 'Escolha um dia', :month => 'mês', :year => 'ano'} %>
  	</div>
 	
 	<br />

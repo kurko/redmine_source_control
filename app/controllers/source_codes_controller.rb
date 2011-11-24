@@ -107,6 +107,7 @@ class SourceCodesController < ApplicationController
       @page = 1 if @page <= 0
       @offset = (@page.to_i-1)*@per_page
       @offset = 0 if @offset < 0
+      @total_offset = @offset + @per_page
     
       # default query
       query = { 
