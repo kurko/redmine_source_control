@@ -22,7 +22,6 @@ class SourceCodesController < ApplicationController
     @client = Client.find(params[:client_id])
     @source = SourceCode.find(params[:id])
     @sourcecode_types = SourcecodeType.find(:all).map { |e| [e.name, e.id]}
-    @code_sectors = CodeSector.find(:all).map { |e| [e.name, e.id]}
   end
 
   def create
